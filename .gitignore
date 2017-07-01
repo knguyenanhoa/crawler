@@ -1,0 +1,14 @@
+# Python specific
+__pycache__/
+*.py[cod]
+
+# Python rope project
+.ropeproject
+
+# Python setuptools
+build/
+dist/
+
+# Logs
+pip-log.txt
+pip-delete-this-directory.txt

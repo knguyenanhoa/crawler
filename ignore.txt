@@ -2,4 +2,7 @@
 jpg
 png
 jpeg
+svg
 mp3
+p-search
+semi

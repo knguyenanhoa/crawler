@@ -1,11 +1,14 @@
+# Std lib
 import urllib.request
-import nltk
+import urllib.parse
 
+# Modules
 import node
 from parse import Parse
 
 class Node:
     interestingLinks = []
+    parser = Parse()
 
     def __init__(self):
         return None
@@ -13,42 +16,35 @@ class Node:
     def go_to(self, url):
         try:
             return urllib.request.urlopen(url)
-        except ValueError:
-            print('ValueError')
+        except ValueError as error:
+            print(error)
             return None
         except urllib.error.HTTPError:
             print('HTTPError')
             return None
 
-
     def parse(self, rawData):
-        parser = Parse(rawData)
-        return parser.get_links()
-
-
-
+        return self.parser.get_links(rawData)
 
     def process_data(self, data, searchTerms, currentLink):
         interest = 0
         for d in data:
-            tokens = nltk.word_tokenize(d)
-            for t in tokens:
-                for term in searchTerms: 
-                    if t.strip() == term:
-                        interest += 1
-                    else:
-                        continue
+            for term in searchTerms: 
+                if self.parser.match(d, term):
+                    interest += 1
+                else:
+                    continue
 
-        if interest > 0:
+        if interest > 0 and currentLink not in self.interestingLinks:
             self.interestingLinks.append(currentLink)
-            
-
 
     def explore(self, params):
         searchTerms = params['searchTerms']
         depth = params['depth']
         maxDepth = params['maxDepth']
         currentLink = params['currentLink']
+        maxLinks = params['maxLinks']
+        fixUrl = params['fixUrl']
 
         if depth >= maxDepth:
             return None
@@ -62,15 +58,26 @@ class Node:
 
                 self.process_data(parsedResult['data'], searchTerms, currentLink)
 
+                links = parsedResult['links'][:maxLinks]
+                if len(links) > 0:
+                    for link in links:
+                        if self.parser.skip_link(link):
+                            continue
 
-                for link in parsedResult['links']:
-                    nextParams = {}
-                    nextParams['depth'] = depth
-                    nextParams['maxDepth'] = maxDepth
-                    nextParams['currentLink'] = link
-                    nextParams['searchTerms'] = searchTerms
+                        if fixUrl == 'true':
+                            link = urllib.parse.urljoin(currentLink, link)
 
-                    self.explore(nextParams)
+                        nextParams = {}
+                        nextParams['depth'] = depth
+                        nextParams['maxDepth'] = maxDepth
+                        nextParams['currentLink'] = link
+                        nextParams['searchTerms'] = searchTerms
+                        nextParams['maxLinks'] = maxLinks
+                        nextParams['fixUrl'] = fixUrl
+
+                        self.explore(nextParams)
+                else:
+                    return None
 
             else:
                 return None

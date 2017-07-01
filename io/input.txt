@@ -1,0 +1,16 @@
+################## ROOT URL ########################
+https://en.wikipedia.org/wiki/Physics
+
+################## OPTIONS #########################
+### Max Depth n (nth power search space, exp time - very dangerous)
+3
+### Max Breadth m (relatively safe to increase)
+10
+### Attempt to fix URL
+true
+
+################ SEARCH DICT ############### ######
+matter
+antimatter
+Friedman
+Friedmann

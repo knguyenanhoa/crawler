@@ -1,0 +1,5 @@
+# List link patterns to ignore
+jpg
+png
+jpeg
+mp3

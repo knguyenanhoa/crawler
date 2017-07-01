@@ -1,4 +1,5 @@
 from html.parser import HTMLParser
+import re
 
 class HTMLResponseParser(HTMLParser):
     links = []
@@ -16,18 +17,39 @@ class HTMLResponseParser(HTMLParser):
 
 
 class Parse:
-    def __init__(self, rawData):
-        self.rawData = rawData
+    link_ignore_patterns = []
 
-    def get_links(self):
-        charset = self.rawData.headers.get_content_charset()
+    def __init__(self):
+        with open('ignore.txt', 'r') as file:
+            for line in file:
+                self.link_ignore_patterns.append(line.strip())
+        self.link_ignore_patterns = self.link_ignore_patterns[1:]
+
+    def get_links(self, rawData):
+        charset = rawData.headers.get_content_charset()
         if charset != None:
-            processedData = self.rawData.read().decode(charset)
+            processedData = rawData.read().decode(charset)
         else:
-            processedData = self.rawData.read().decode('utf-8')
+            processedData = rawData.read().decode('utf-8')
 
         responseParser = HTMLResponseParser()
         responseParser.feed(processedData)
 
-        # first 10 links only please...
-        return {'links': responseParser.links[:20], 'data': responseParser.data}
+        return {'links': responseParser.links, 'data': responseParser.data}
+
+    def match(self, rawData, searchTerm):
+        template = re.compile(searchTerm)
+        if template.search(rawData):
+            return True
+        else:
+            return False
+
+    def skip_link(self, link):
+        for pattern in self.link_ignore_patterns:
+            template = re.compile(pattern)
+            if template.search(link):
+                return True
+            else:
+                continue
+        return False
+        

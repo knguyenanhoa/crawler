@@ -1,16 +1,29 @@
-import urllib.request
-from parse import Parse
+import io
+import node
 
-
-def explore(url):
-    return urllib.request.urlopen(url)
+global searchTerms
 
 
 # Main
-url = 'https://www.google.com'
+searchTerms = []
 
-raw_data = explore(url)
-parser = Parse(raw_data)
-links = parser.get_links()
+with open('input.txt','r') as file:
+    for line in file:
+        searchTerms.append(line.strip())
+
+url = searchTerms[0]
+searchTerms.pop(0)
+
+params = {}
+params['depth'] = 0
+params['maxDepth'] = 2
+params['currentLink'] = url
+params['interestingLinks'] = []
+params['searchTerms'] = searchTerms
+
+rootNode = node.Node()
+rootNode.explore(params)
 
 
+# CHECK
+print(rootNode.interestingLinks)

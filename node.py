@@ -38,6 +38,13 @@ class Node:
         if interest > 0 and currentLink not in self.interestingLinks:
             self.interestingLinks.append(currentLink)
 
+    def link_check_fail(self, link, currentLink):
+        if self.parser.skip_link(link):
+            return True
+        if link == currentLink:
+            return True
+        return False
+
     def explore(self, params):
         searchTerms = params['searchTerms']
         depth = params['depth']
@@ -61,7 +68,7 @@ class Node:
                 links = parsedResult['links'][:maxLinks]
                 if len(links) > 0:
                     for link in links:
-                        if self.parser.skip_link(link):
+                        if self.link_check_fail(link, currentLink):
                             continue
 
                         if fixUrl == 'true':

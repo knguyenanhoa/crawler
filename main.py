@@ -6,7 +6,7 @@ import io
 import node
 
 
-# Func
+# Functions
 def reader(filePath):
     searchTerms = []
     with open(filePath,'r') as file:
@@ -19,19 +19,19 @@ def writer(filePath, data):
         for datum in data:
             file.write("%s\n" % datum)
 
-# Setup
+# Input
 startTime = time.time() # log time
 
 params = {}
 
-searchTerms = reader('io/input.txt')
-params['searchTerms'] = searchTerms[12:]
+inputFile = reader('io/input.txt')
 
+params['searchTerms'] = inputFile[12:]
 params['depth'] = 0
-params['maxDepth'] = int(searchTerms[5])
-params['maxLinks'] = int(searchTerms[7])
-params['fixUrl'] = searchTerms[9]
-params['currentLink'] = searchTerms[1]
+params['maxDepth'] = int(inputFile[5])
+params['maxLinks'] = int(inputFile[7])
+params['fixUrl'] = inputFile[9]
+params['currentLink'] = inputFile[1]
 params['interestingLinks'] = []
 
 
@@ -51,4 +51,4 @@ else:
 if result != None:
     writer('io/output.txt', rootNode.interestingLinks)
 
-print("Exec in %s seconds" % (time.time() - startTime))
+print("Exec in %s seconds" % (time.time() - startTime)) # log time

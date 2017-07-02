@@ -12,7 +12,6 @@ class BFSNode:
         return None
 
     def go_to(self, url):
-        print(url)
         try:
             return urllib.request.urlopen(url)
         except ValueError as error:

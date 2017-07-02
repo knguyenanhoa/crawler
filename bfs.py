@@ -53,8 +53,6 @@ while depth <= maxDepth:
     rootNode = bfs_node.BFSNode()
     params['newLinks'] = rootNode.explore(params)
     params['interestingLinks'] = rootNode.interestingLinks
-    print(params['newLinks'])
-    print("============================")
 
 # Output
 if params['interestingLinks'] != None:

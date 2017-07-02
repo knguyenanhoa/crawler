@@ -1,15 +1,13 @@
 ################## ROOT URL ########################
-https://en.wikipedia.org/wiki/Black_hole
+https://en.wikipedia.org/wiki/Gravitational_field
 
 ################## OPTIONS (BFS) ###################
 ### Max Depth
-3
+2
 ### Max Breadth
-5
+40
 ### Attempt to fix URL
 true
-### No of Threads
-2
 
 ################ SEARCH DICT ############### ######
 Friedman

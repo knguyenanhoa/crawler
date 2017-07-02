@@ -32,14 +32,12 @@ seedLink = inputFile[1]
 maxDepth = int(inputFile[5])
 maxLinks = int(inputFile[7])
 fixUrl = inputFile[9]
-noOfThreads = int(inputFile[11])
 
 
 # MAIN
 searchSpace = maxLinks ** maxDepth
 print("Search space %s" % searchSpace)
 
-interestingLinks = []
 params = {}
 
 params['searchTerms'] = searchTerms
@@ -48,7 +46,6 @@ params['interestingLinks'] = []
 params['maxLinks'] = maxLinks
 params['newLinks'] = [seedLink]
 params['seedLink'] = seedLink
-params['noOfThreads'] = noOfThreads
 
 while depth <= maxDepth:
     depth += 1
@@ -56,6 +53,8 @@ while depth <= maxDepth:
     rootNode = bfs_node.BFSNode()
     params['newLinks'] = rootNode.explore(params)
     params['interestingLinks'] = rootNode.interestingLinks
+    print(params['newLinks'])
+    print("============================")
 
 # Output
 if params['interestingLinks'] != None:

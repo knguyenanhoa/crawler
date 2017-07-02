@@ -33,6 +33,11 @@ class Parse:
             processedData = rawData.read().decode('utf-8')
 
         responseParser = HTMLResponseParser()
+
+        # dunno why this needs to happen
+        responseParser.links = []
+        responseParser.data = []
+
         responseParser.feed(processedData)
 
         return {'links': responseParser.links, 'data': responseParser.data}

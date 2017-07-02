@@ -3,7 +3,7 @@ import time
 
 # Other
 import io
-import node
+import dfs_node
 
 
 # Functions
@@ -24,7 +24,7 @@ startTime = time.time() # log time
 
 params = {}
 
-inputFile = reader('io/input.txt')
+inputFile = reader('io/dfs_input.txt')
 
 params['searchTerms'] = inputFile[12:]
 params['depth'] = 0
@@ -40,7 +40,7 @@ searchSpace = params['maxLinks'] ** params['maxDepth']
 print("Search space %s" % searchSpace)
 
 if searchSpace <= 1000:
-    rootNode = node.Node()
+    rootNode = dfs_node.DFSNode()
     rootNode.explore(params)
     result = rootNode.interestingLinks
 else:
@@ -49,6 +49,6 @@ else:
 
 # Output
 if result != None:
-    writer('io/output.txt', rootNode.interestingLinks)
+    writer('io/dfs_output.txt', rootNode.interestingLinks)
 
 print("Exec in %s seconds" % (time.time() - startTime)) # log time

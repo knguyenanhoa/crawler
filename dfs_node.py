@@ -3,10 +3,9 @@ import urllib.request
 import urllib.parse
 
 # Modules
-import node
 from parse import Parse
 
-class Node:
+class DFSNode:
     interestingLinks = []
     parser = Parse()
 

@@ -1,0 +1,17 @@
+################## ROOT URL ########################
+https://en.wikipedia.org/wiki/Black_hole
+
+################## OPTIONS (BFS) ###################
+### Max Depth
+3
+### Max Breadth
+5
+### Attempt to fix URL
+true
+### No of Threads
+2
+
+################ SEARCH DICT ############### ######
+Friedman
+metric
+Schwartzchild

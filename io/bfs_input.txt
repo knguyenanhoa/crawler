@@ -5,11 +5,14 @@ https://en.wikipedia.org/wiki/Gravitational_field
 ### Max Depth
 2
 ### Max Breadth
-40
+10
 ### Attempt to fix URL
 true
+### No of processes
+15
 
 ################ SEARCH DICT ############### ######
+gravity
 Friedman
 metric
 Schwartzchild

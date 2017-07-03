@@ -16,7 +16,7 @@ class HTMLResponseParser(HTMLParser):
         self.data.append(data)
 
 
-class Parse:
+class ParseWebContent:
     link_ignore_patterns = []
 
     def __init__(self):

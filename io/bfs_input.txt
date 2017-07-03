@@ -3,9 +3,9 @@ https://en.wikipedia.org/wiki/Gravitational_field
 
 ################## OPTIONS (BFS) ###################
 ### Max Depth
-2
+3
 ### Max Breadth
-10
+50
 ### Attempt to fix URL
 true
 ### No of processes

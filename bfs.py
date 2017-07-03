@@ -2,61 +2,46 @@
 import time
 
 # Other
-import io
 import bfs_node
+from read_write import ReadWrite
 
-
-# Functions
-def reader(filePath):
-    searchTerms = []
-    with open(filePath,'r') as file:
-        for line in file:
-            searchTerms.append(line.strip())
-    return searchTerms
-
-def writer(filePath, data):
-    with open(filePath, 'w') as file:
-        for datum in data:
-            file.write("%s\n" % datum)
 
 # Input
 startTime = time.time() # log time
 
-params = {}
-
-inputFile = reader('io/bfs_input.txt')
-
-searchTerms = inputFile[14:]
+io = ReadWrite()
+inputFile = io.reader('io/bfs_input.txt')
 depth = 0
-seedLink = inputFile[1]
-maxDepth = int(inputFile[5])
-maxLinks = int(inputFile[7])
-fixUrl = inputFile[9]
-noOfProcesses = int(inputFile[11])
+
+params = {}
+params['seedLink'] = inputFile[1]
+params['newLinks'] = [inputFile[1]]
+params['maxDepth'] = int(inputFile[5])
+params['maxLinks'] = int(inputFile[7])
+params['fixUrl'] = inputFile[9]
+params['noOfProcesses'] = int(inputFile[11])
+params['searchTerms'] = inputFile[14:]
+params['interestingLinks'] = []
 
 
 # MAIN
-searchSpace = maxLinks ** maxDepth
+searchSpace = params['maxLinks'] ** params['maxDepth']
 print("Search space %s" % searchSpace)
 
-params['searchTerms'] = searchTerms
-params['fixUrl'] = fixUrl
-params['interestingLinks'] = []
-params['maxLinks'] = maxLinks
-params['newLinks'] = [seedLink]
-params['seedLink'] = seedLink
-params['noOfProcesses'] = noOfProcesses
-
-while depth < maxDepth:
+while depth < params['maxDepth']:
     depth += 1
+    if depth == params['maxDepth']:
+        print("Depth --- %s MAX" % depth)
+    else:
+        print("Depth --- %s" % depth)
 
     rootNode = bfs_node.BFSNode()
     rootNode.explore(params)
     params['newLinks'] = rootNode.discoveredLinks
-    params['interestingLinks'].extend(rootNode.interestingLinks)
+    params['interestingLinks'] = rootNode.interestingLinks
 
 # Output
 if params['interestingLinks'] != None:
-    writer('io/bfs_output.txt', params['interestingLinks'])
+    io.writer('io/bfs_output.txt', params['interestingLinks'])
 
 print("Exec in %s seconds" % (time.time() - startTime)) # log time

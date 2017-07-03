@@ -1,7 +1,7 @@
 # Std lib
 import urllib.request
 import urllib.parse
-from multiprocessing import Process, Manager
+from multiprocessing import Process, Manager, Pool
 
 # Modules
 from parser import ParseWebContent
@@ -48,7 +48,7 @@ class BFSNode:
             
         return process_sets
 
-    def process_explore(self, processSet, params,):
+    def pool_explore(self, processSet, params,):
         seedLink = params['seedLink']
         searchTerms = params['searchTerms']
         maxLinks = params['maxLinks']
@@ -73,9 +73,9 @@ class BFSNode:
 
         processSets = self.compile_process_sets(params['newLinks'], params['noOfProcesses'])
 
-        for set in processSets:
-            p = Process(target=self.process_explore, args=(set, params,))
-            p.start()
-            p.join()
+        with Pool() as p:
+            multi_result = [p.apply_async(self.pool_explore, (set, params,)) for set in processSets]
+            print([result.get() for result in multi_result])
+            print(self.interestingLinks)
 
         return None

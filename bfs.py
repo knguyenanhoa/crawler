@@ -54,7 +54,6 @@ while depth < maxDepth:
     rootNode.explore(params)
     params['newLinks'] = rootNode.discoveredLinks
     params['interestingLinks'].extend(rootNode.interestingLinks)
-    print(params['interestingLinks'])
 
 # Output
 if params['interestingLinks'] != None:

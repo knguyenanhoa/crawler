@@ -27,7 +27,16 @@ class BFSNode:
         parser = Parse()
         return parser.get_links(rawData)
 
-    def process_data(self, data, searchTerms, currentLink):
+    def interesting(self, interest, currentLink, seedLink):
+        if interest < 0:
+            return False
+        if currentLink in self.interestingLinks:
+            return False
+        if currentLink == seedLink:
+            return False
+        return True
+
+    def process_data(self, data, searchTerms, currentLink, seedLink):
         parser = Parse()
         interest = 0
         for d in data:
@@ -37,7 +46,7 @@ class BFSNode:
                 else:
                     continue
 
-        if interest > 0 and (not (currentLink in self.interestingLinks)):
+        if self.interesting(interest, currentLink, seedLink):
             self.interestingLinks.append(currentLink)
 
     def compile_process_sets(self, newLinks, noOfProcesses):
@@ -66,7 +75,7 @@ class BFSNode:
             if rawData != None:
                 parsedResult = self.parse(rawData)
 
-                self.process_data(parsedResult['data'], searchTerms, link)
+                self.process_data(parsedResult['data'], searchTerms, link, seedLink)
                 self.discoveredLinks.extend(parsedResult['links'][:maxLinks])
 
     def explore(self, params):
@@ -84,6 +93,8 @@ class BFSNode:
             p = Process(target=self.process_explore, args=(set, fixUrl, seedLink, searchTerms, maxLinks))
             p.start()
             p.join()
+
+        self.interestingLinks = list(self.interestingLinks)
             
         return None
 

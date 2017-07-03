@@ -75,7 +75,6 @@ class BFSNode:
 
         with Pool() as p:
             multi_result = [p.apply_async(self.pool_explore, (set, params,)) for set in processSets]
-            print([result.get() for result in multi_result])
-            print(self.interestingLinks)
+            [result.get() for result in multi_result]
 
         return None

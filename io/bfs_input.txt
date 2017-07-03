@@ -3,13 +3,13 @@ https://en.wikipedia.org/wiki/Gravitational_field
 
 ################## OPTIONS (BFS) ###################
 ### Max Depth
-3
+2
 ### Max Breadth
-50
+10
 ### Attempt to fix URL
 true
-### No of processes
-15
+### No of processes (=no of cpu cores)
+4
 
 ################ SEARCH DICT ############### ######
 gravity

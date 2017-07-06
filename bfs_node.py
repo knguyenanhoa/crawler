@@ -73,7 +73,7 @@ class BFSNode:
 
         processSets = self.compile_process_sets(params['newLinks'], params['noOfProcesses'])
 
-        with Pool() as p:
+        with Pool(params['noOfProcesses']) as p:
             multi_result = [p.apply_async(self.pool_explore, (set, params,)) for set in processSets]
             [result.get() for result in multi_result]
 

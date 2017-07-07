@@ -1,8 +1,8 @@
 from parser import ParseWebContent
 
 class Analyser:
-    def __init__(self):
-        pass
+    def __init__(self): 
+        return None
 
     def interesting(self, interest, params,):
         if interest < 0:
@@ -23,10 +23,13 @@ class Analyser:
             for term in params['searchTerms']: 
                 if parser.match(d, term):
                     interest += 1
+                elif params['keyPhrase'] != '' and parser.match(d, params['keyPhrase']):
+                    return {'isTargetLink': True, 'result': currentLink}
                 else:
                     continue
 
-        if self.interesting(interest, params,):
-            return currentLink
+        result = self.interesting(interest, params,)
+        if result:
+            return {'isTargetLink': False, 'result': currentLink}
         else:
-            return None
+            return {'isTargetLink': False, 'result': None}

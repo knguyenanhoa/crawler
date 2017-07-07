@@ -26,15 +26,19 @@ class ParseWebContent:
         self.link_ignore_patterns = self.link_ignore_patterns[1:]
 
     def get_links(self, rawData):
+        processedData = ''
         charset = rawData.headers.get_content_charset()
-        if charset != None:
-            processedData = rawData.read().decode(charset)
-        else:
-            processedData = rawData.read().decode('utf-8')
+        try:
+            if charset == None:
+                processedData = rawData.read().decode('utf-8')
+            else:
+                processedData = rawData.read().decode(charset)
+
+        except UnicodeDecodeError as e:
+            print(e)
 
         responseParser = HTMLResponseParser()
 
-        # dunno why this needs to happen
         responseParser.links = []
         responseParser.data = []
 

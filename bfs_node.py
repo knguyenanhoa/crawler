@@ -1,7 +1,7 @@
 # Std lib
 import urllib.request
 import urllib.parse
-from multiprocessing import Process, Manager, Pool
+from multiprocessing import Process, Manager, Pool, Event
 
 # Modules
 from parser import ParseWebContent
@@ -12,19 +12,27 @@ class BFSNode:
     analyser = Analyser()
     discoveredLinks = man.list()
     interestingLinks = man.list()
+    visitedLinks = man.list()
+    kill = Event()
 
     def __init__(self): 
         return None
 
+    def visited(self, url):
+        if url in self.visitedLinks:
+            return True
+        else:
+            self.visitedLinks.append(url)
+            return False
+
     def go_to(self, url):
         try:
             return urllib.request.urlopen(url)
-        except ValueError as error:
-            print(error)
+        except (ValueError, urllib.error.URLError, urllib.error.HTTPError) as e:
+            print(e)
             return None
-        except urllib.error.HTTPError:
-            print('HTTPError')
-            return None
+        except:
+            print('Unknown error')
 
     def parse(self, rawData):
         parser = ParseWebContent()
@@ -57,22 +65,34 @@ class BFSNode:
         noOfProcesses = params['noOfProcesses']
 
         for link in processSet:
+            if self.visited(link):
+                continue
+
+            if self.kill.is_set():
+                return None
+
             if fixUrl == 'true':
                 link = urllib.parse.urljoin(seedLink, link)
             rawData = self.go_to(link)
 
             if rawData != None:
                 parsedResult = self.parse(rawData)
-
                 params['currentLink'] = link
-                self.interestingLinks.append(self.analyser.analyse(parsedResult['data'], params,))
-                self.discoveredLinks.extend(parsedResult['links'][:maxLinks])
+
+                analysedResult = self.analyser.analyse(parsedResult['data'], params,)
+                if analysedResult['isTargetLink']:
+                    print("First encounter: %s" % analysedResult['result'])
+                    self.kill.set()
+                else:
+                    self.interestingLinks.append(analysedResult['result'])
+                    self.discoveredLinks.extend(parsedResult['links'][:maxLinks])
 
     def explore(self, params):
         self.interestingLinks = self.man.list(params['interestingLinks'])
 
         processSets = self.compile_process_sets(params['newLinks'], params['noOfProcesses'])
 
+        self.visitedLinks = self.man.list()
         with Pool(params['noOfProcesses']) as p:
             multi_result = [p.apply_async(self.pool_explore, (set, params,)) for set in processSets]
             [result.get() for result in multi_result]

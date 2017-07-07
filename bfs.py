@@ -20,7 +20,8 @@ params['maxDepth'] = int(inputFile[5])
 params['maxLinks'] = int(inputFile[7])
 params['fixUrl'] = inputFile[9]
 params['noOfProcesses'] = int(inputFile[11])
-params['searchTerms'] = inputFile[14:]
+params['keyPhrase'] = inputFile[15]
+params['searchTerms'] = inputFile[18:]
 params['interestingLinks'] = []
 
 

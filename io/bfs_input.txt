@@ -1,18 +1,21 @@
 ################## ROOT URL ########################
-https://en.wikipedia.org/wiki/Gravitational_field
+https://en.wikipedia.org/wiki/Node
 
 ################## OPTIONS (BFS) ###################
 ### Max Depth
-2
+5
 ### Max Breadth
-10
+20
 ### Attempt to fix URL
 true
 ### No of processes (=no of cpu cores)
 4
 
-################ SEARCH DICT ############### ######
-gravity
-Friedman
-metric
-Schwartzchild
+################ SEARCH DICT ######################
+### Key Phrase (terminate once found)
+teapot
+
+### Other phrases
+js
+javascript
+java

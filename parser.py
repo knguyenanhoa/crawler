@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 import re
+import logging
 
 class HTMLResponseParser(HTMLParser):
     links = []
@@ -18,6 +19,7 @@ class HTMLResponseParser(HTMLParser):
 
 class ParseWebContent:
     link_ignore_patterns = []
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         with open('ignore.txt', 'r') as file:
@@ -26,6 +28,7 @@ class ParseWebContent:
         self.link_ignore_patterns = self.link_ignore_patterns[1:]
 
     def get_links(self, rawData):
+        self.logger.info('got here')
         processedData = ''
         charset = rawData.headers.get_content_charset()
         try:
@@ -35,7 +38,7 @@ class ParseWebContent:
                 processedData = rawData.read().decode(charset)
 
         except UnicodeDecodeError as e:
-            print(e)
+            self.logger.error(e)
 
         responseParser = HTMLResponseParser()
 

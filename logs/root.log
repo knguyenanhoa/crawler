@@ -1,0 +1,4 @@
+2017-07-16 14:36:12,130 root         INFO     Search space 3200000
+2017-07-16 14:36:12,130 root         INFO     Depth --- 1
+2017-07-16 14:36:13,791 root         INFO     Depth --- 2
+2017-07-16 14:36:18,754 bfs_node     ERROR    Unknown error

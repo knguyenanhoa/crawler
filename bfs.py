@@ -1,10 +1,16 @@
 # Std lib
 import time
+import logging
+from logging.config import fileConfig
 
 # Other
 import bfs_node
 from read_write import ReadWrite
 
+
+# Init logger
+fileConfig('logs/logger_config.cfg')
+logger = logging.getLogger()
 
 # Input
 startTime = time.time() # log time
@@ -27,14 +33,14 @@ params['interestingLinks'] = []
 
 # MAIN
 searchSpace = params['maxLinks'] ** params['maxDepth']
-print("Search space %s" % searchSpace)
+logger.info("Search space %s" % searchSpace)
 
 while depth < params['maxDepth']:
     depth += 1
     if depth == params['maxDepth']:
-        print("Depth --- %s MAX" % depth)
+        logger.info("Depth --- %s MAX" % depth)
     else:
-        print("Depth --- %s" % depth)
+        logger.info("Depth --- %s" % depth)
 
     rootNode = bfs_node.BFSNode()
     rootNode.explore(params)
@@ -45,4 +51,4 @@ while depth < params['maxDepth']:
 if params['interestingLinks'] != None:
     io.writer('io/bfs_output.txt', params['interestingLinks'])
 
-print("Exec in %s seconds" % (time.time() - startTime)) # log time
+logger.info("Exec in %s seconds" % (time.time() - startTime)) # log time

@@ -1,4 +1,5 @@
 # Std lib
+import logging
 import urllib.request
 import urllib.parse
 from multiprocessing import Process, Manager, Pool, Event
@@ -26,13 +27,15 @@ class BFSNode:
             return False
 
     def go_to(self, url):
+        # logger init here as multiprocess not supported
+        logger = logging.getLogger(__name__)
         try:
             return urllib.request.urlopen(url)
         except (ValueError, urllib.error.URLError, urllib.error.HTTPError) as e:
-            print(e)
+            logger.error(e)
             return None
         except:
-            print('Unknown error')
+            logger.error('Unknown error')
 
     def parse(self, rawData):
         parser = ParseWebContent()

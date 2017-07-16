@@ -32,10 +32,10 @@ class BFSNode:
         try:
             return urllib.request.urlopen(url)
         except (ValueError, urllib.error.URLError, urllib.error.HTTPError) as e:
-            logger.error(e)
+            logger.warn(e)
             return None
         except:
-            logger.error('Unknown error')
+            logger.warn('Unknown error')
 
     def parse(self, rawData):
         parser = ParseWebContent()
@@ -84,7 +84,7 @@ class BFSNode:
 
                 analysedResult = self.analyser.analyse(parsedResult['data'], params,)
                 if analysedResult['isTargetLink']:
-                    print("First encounter: %s" % analysedResult['result'])
+                    logger.info('Hit: %s' % link)
                     self.kill.set()
                 else:
                     self.interestingLinks.append(analysedResult['result'])

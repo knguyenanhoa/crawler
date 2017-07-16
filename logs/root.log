@@ -1,4 +1,15 @@
-2017-07-16 14:36:12,130 root         INFO     Search space 3200000
-2017-07-16 14:36:12,130 root         INFO     Depth --- 1
-2017-07-16 14:36:13,791 root         INFO     Depth --- 2
-2017-07-16 14:36:18,754 bfs_node     ERROR    Unknown error
+2017-07-16 14:43:24,429  root            INFO       Search space 3200000
+2017-07-16 14:43:24,429  root            INFO       Depth --- 1
+2017-07-16 14:43:26,102  root            INFO       Depth --- 2
+2017-07-16 14:43:33,292  root            INFO       Depth --- 3
+2017-07-16 14:43:43,822  bfs_node        WARNING    HTTP Error 404: Not Found
+2017-07-16 14:43:51,364  bfs_node        WARNING    <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+2017-07-16 14:44:49,609  root            INFO       Depth --- 4
+2017-07-16 14:44:58,386  bfs_node        WARNING    HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.
+The last 30x error message was:
+Moved Temporarily
+2017-07-16 14:45:18,404  bfs_node        WARNING    HTTP Error 404: Not Found
+2017-07-16 14:45:23,384  bfs_node        WARNING    <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+2017-07-16 14:45:31,124  bfs_node        WARNING    Unknown error
+2017-07-16 14:45:31,123  bfs_node        WARNING    Unknown error
+2017-07-16 14:45:31,124  bfs_node        WARNING    Unknown error
